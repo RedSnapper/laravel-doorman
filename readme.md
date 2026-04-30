@@ -1,4 +1,4 @@
-# Laravel Version Control
+# Laravel Doorman
 
 This package provides traits to use to quickly scaffold role based permissions to your laravel project.
 
