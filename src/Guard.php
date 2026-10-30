@@ -9,7 +9,7 @@ class Guard
      * @param  string|null  $name
      * @return string|null
      */
-    public static function getModelFor(string $name = null):?string
+    public static function getModelFor(?string $name = null):?string
     {
         $guard = $name ?? static::getDefaultName();
 
