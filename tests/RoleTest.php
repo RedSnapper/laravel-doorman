@@ -3,6 +3,7 @@
 namespace Redsnapper\LaravelDoorman\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Redsnapper\LaravelDoorman\Exceptions\PermissionDoesNotExist;
 use Redsnapper\LaravelDoorman\Models\Permission;
 use Redsnapper\LaravelDoorman\Models\Role;
@@ -39,14 +40,14 @@ class RoleTest extends TestCase
         $this->testPermission = PermissionFactory::new()->create(['name'=>'do-something']);
     }
 
-    /** @test */
+    #[Test]
     public function a_role_can_have_users()
     {
         $this->testUser->assignRole($this->testRole);
         $this->assertTrue($this->testRole->users->first()->is($this->testUser));
     }
 
-    /** @test */
+    #[Test]
     public function can_be_given_a_permission()
     {
         $permissionA = PermissionFactory::new()->create(["name" => "can-see-the-ground"]);
@@ -54,14 +55,14 @@ class RoleTest extends TestCase
         $this->assertTrue($this->testRole->hasPermission($permissionA->name));
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_given_a_permission_that_does_not_exist()
     {
         $this->expectException(PermissionDoesNotExist::class);
         $this->testRole->givePermissionTo('act-superbly');
     }
 
-    /** @test */
+    #[Test]
     public function can_be_given_multiple_permissions_using_an_array()
     {
         $permission = PermissionFactory::new()->create();
@@ -71,7 +72,7 @@ class RoleTest extends TestCase
         $this->assertTrue($this->testRole->hasPermissionTo($permission));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_given_multiple_permissions_using_multiple_arguments()
     {
         $permission = PermissionFactory::new()->create();
@@ -81,7 +82,7 @@ class RoleTest extends TestCase
         $this->assertTrue($this->testRole->hasPermissionTo($permission));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_sync_permissions()
     {
         $permission = PermissionFactory::new()->create();
@@ -91,14 +92,14 @@ class RoleTest extends TestCase
         $this->assertTrue($this->testRole->hasPermissionTo($permission));
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_syncing_permissions_that_do_not_exist()
     {
         $this->expectException(PermissionDoesNotExist::class);
         $this->testRole->syncPermissions('permission-does-not-exist');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_a_permission()
     {
         $this->testRole->givePermissionTo('do-something');
@@ -107,7 +108,7 @@ class RoleTest extends TestCase
         $this->assertFalse($this->testRole->hasPermissionTo('do-something'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_give_and_remove_multiple_permissions()
     {
         $permission = PermissionFactory::new()->create();
@@ -117,20 +118,20 @@ class RoleTest extends TestCase
         $this->assertEquals(0, $this->testRole->permissions()->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_false_if_it_does_not_have_the_permission()
     {
         $this->assertFalse($this->testRole->hasPermissionTo('do-something'));
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_if_the_permission_does_not_exist()
     {
         $this->expectException(PermissionDoesNotExist::class);
         $this->testRole->hasPermissionTo('doesnt-exist');
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_remove_already_associated_permissions_when_assigning_new_permissions()
     {
         $permission = PermissionFactory::new()->create();
@@ -139,7 +140,7 @@ class RoleTest extends TestCase
         $this->assertTrue($this->testRole->hasPermissionTo('do-something'));
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_throw_an_exception_when_assigning_a_permission_that_is_already_assigned()
     {
         $this->testRole->givePermissionTo('do-something');
