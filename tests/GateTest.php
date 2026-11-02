@@ -3,6 +3,7 @@
 namespace Redsnapper\LaravelDoorman\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Redsnapper\LaravelDoorman\Models\Permission;
 use Redsnapper\LaravelDoorman\Models\Role;
@@ -38,13 +39,13 @@ class GateTest extends TestCase
         $this->testPermission = PermissionFactory::new()->create(['name'=>'do-something']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_determine_if_a_user_does_not_have_a_permission()
     {
         $this->assertFalse($this->testUser->can('do-something'));
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_other_gate_before_callbacks_to_run_if_a_user_does_not_have_a_permission()
     {
         $this->assertFalse($this->testUser->can('do-something'));
@@ -54,7 +55,7 @@ class GateTest extends TestCase
         $this->assertTrue($this->testUser->can('do-something'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_determine_if_a_user_has_a_permission_through_roles()
     {
         PermissionFactory::new()->create(['name'=>'existing-permission']);

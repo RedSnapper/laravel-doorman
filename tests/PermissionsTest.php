@@ -3,6 +3,7 @@
 namespace Redsnapper\LaravelDoorman\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Redsnapper\LaravelDoorman\Models\Permission;
 use Redsnapper\LaravelDoorman\Models\Role;
 use Redsnapper\LaravelDoorman\Tests\Fixtures\Factories\PermissionFactory;
@@ -37,7 +38,7 @@ class PermissionsTest extends TestCase
         $this->testPermission = PermissionFactory::new()->create(['name'=>'do-something']);
     }
 
-    /** @test */
+    #[Test]
     public function can_check_if_permission_has_a_role()
     {
         $this->assertFalse($this->testPermission->hasRole($this->testRole));
@@ -51,7 +52,7 @@ class PermissionsTest extends TestCase
 
     }
 
-    /** @test */
+    #[Test]
     public function it_can_assign_a_role_using_a_model()
     {
         $this->testPermission->hasRole($this->testRole);
@@ -59,21 +60,21 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole));
     }
 
-    /** @test */
+    #[Test]
     public function can_assign_a_role_using_an_id()
     {
         $this->testPermission->assignRole($this->testRole->id);
         $this->assertTrue($this->testPermission->hasRole($this->testRole));
     }
 
-    /** @test */
+    #[Test]
     public function can_assign_a_role_by_name()
     {
         $this->testPermission->assignRole('Test');
         $this->assertTrue($this->testPermission->hasRole($this->testRole));
     }
 
-    /** @test */
+    #[Test]
     public function can_assign_multiple_roles()
     {
         $this->testPermission->assignRole($this->testRole->id, 'Test 2');
@@ -81,7 +82,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole2));
     }
 
-    /** @test */
+    #[Test]
     public function can_assign_multiple_roles_using_an_array()
     {
         $this->testPermission->assignRole([$this->testRole->id, 'Test 2']);
@@ -89,7 +90,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole2));
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_remove_already_associated_roles_when_assigning_new_roles()
     {
         $this->testPermission->assignRole($this->testRole);
@@ -97,7 +98,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->fresh()->hasRole($this->testRole));
     }
 
-    /** @test */
+    #[Test]
     public function can_sync_roles_using_a_model()
     {
         $this->testPermission->assignRole($this->testRole);
@@ -106,7 +107,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole2));
     }
 
-    /** @test */
+    #[Test]
     public function can_sync_roles_using_a_string()
     {
         $this->testPermission->assignRole($this->testRole);
@@ -115,7 +116,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole2));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_sync_multiple_roles()
     {
         $this->testPermission->syncRoles($this->testRole, $this->testRole2);
@@ -123,7 +124,7 @@ class PermissionsTest extends TestCase
         $this->assertTrue($this->testPermission->hasRole($this->testRole2));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_sync_multiple_roles_from_an_array()
     {
         $this->testPermission->syncRoles([$this->testRole, $this->testRole2]);
